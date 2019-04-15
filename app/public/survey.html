@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="./style.css" type="text/css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Surbey</h1>
+    <h2>About You</h2>
+    <form>
+        <div class="form-group" action="/survey" method="post">
+            <label for="exampleFormControlInput1">Name</label>
+            <input type="name" class="form-control" id="name" placeholder="Vegan McGee">
+            <label for="exampleFormControlInput1">Photo</label>
+            <input type="name" class="form-control" id="photo" placeholder="Photo URL">
+
+            <label for="exampleFormControlSelect2">Question 1: How much you like Beans</label>
+            <select multiple class="form-control" id="q1">
+                <option>1.ew</option>
+                <option>2.is ok</option>
+                <option>3.good</option>
+                <option>4.great</option>
+                <option>5.love</option>
+            </select>
+
+            <label for="exampleFormControlSelect2">Question 2: Fruit</label>
+            <select multiple class="form-control" id="q2">
+                <option>1.ew</option>
+                <option>2.is ok</option>
+                <option>3.good</option>
+                <option>4.great</option>
+                <option>5.love</option>
+            </select>
+
+            <label for="exampleFormControlSelect2">Question 3: President</label>
+            <select multiple class="form-control" id="q3">
+                <option>1.ew</option>
+                <option>2.is ok</option>
+                <option>3.good</option>
+                <option>4.great</option>
+                <option>5.love</option>
+            </select>
+
+
+
+        </div>
+        <br>
+        <button id='submit'>Submit Survey</button>
+
+    </form>
+    <div class="completed"></div>
+    <div class="newFriends"></div>
+    <br>
+    <a href="/">
+        <button method="get" action="/home.html">Home</button>
+    </a>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".completed").empty()
+            $("#submit").on("click", function (event) {
+                event.preventDefault();
+                $(".completed").text("Survey submitted! Meet your new friend")
+                var arr = [$("#q1").val()[0][0], $("#q2").val()[0][0], $("#q3").val()[0][0]]
+                var arrStr = arr[0] + ", " + arr[1] + ", " + arr[2] + ", "
+                console.log(arr);
+                var newp = {
+                    name: $("#name").val().trim(),
+                    photo: $("#photo").val().trim(),
+                    scores: arrStr
+
+                }
+                $.post("/api/new", newp);
+            })
+        })
+    </script>
+</body>
+
+</html>

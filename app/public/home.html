@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> El Friend Finder</h1>
+    <p> Find friends by answering obscure and personal questions</p>
+
+    <div id="friendList"></div>
+    <br>
+
+    <!-- <button id="survey">Survey</button> -->
+    <div class="surveyButton">
+        <hr>
+        <a href="/survey">
+            <button method="get" action="/survey.html"> Survey</button>
+        </a>
+    </div>
+    <br>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var friendList = [];
+            getFriends()
+            function getFriends() {
+                $.get("/api/friends", function (data) {
+                    friendList = data;
+                    console.log(friendList)
+                    fillFriends();
+                })
+            }
+
+            function fillFriends() {
+                $("friendList").empty();
+                console.log('working')
+                // var rowsToAdd = [];
+                for (var i = 0; i < friendList.length; i++) {
+                    console.log("loop stat " + friendList[i].name)
+                    var friendstat = $([
+                        "<div class='friendBlock'>",
+                        "<span>",
+                        friendList[i].name,
+                        "</span>", "<br>",
+                        `<img src= ${friendList[i].photo} height="150" width="150"> <br>`,
+                        "</div>"
+                        // "<span>", friendList[i].scores, "</span>"
+
+                    ].join("")
+                    );
+                    $("#friendList").append(friendstat);
+                }
+
+
+            }
+
+        })
+    </script>
+</body>
+
+</html>
